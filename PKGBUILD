@@ -22,12 +22,7 @@ source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
         '90-linux.hook')
 md5sums=('58e80452e2d8e1993cd7ec95e697ab5a'
          '4d3c0c51927b2bb0de4caa5d64a6dd4c'
-         '91d1298599aa31b10f1f3954a450b6c3'
-         '3b781286c0b97cec552ad6c8a7a019dd'
-         '62514cac04a488f99705eecb1e38d86c'
-         '7c97cf141750ad810235b1ad06eb9f75'
-         '61c5ff73c136ed07a7aadbf58db3d96a'
-         '584777ae88bce2c5659960151b64c7d8'
+         '0013598c042ab8fa0f9349c60c7b6f71'
          '41cb5fef62715ead2dd109dbea8413d6'
          '0a5f16bfec6ad982a2f6782724cca8ba'
          '3dc88030a8f2f5a5f97266d99b149f77')
@@ -197,24 +192,24 @@ _package-headers() {
 #    'asurada'
 #  )
 #  chromebook_dtbs=($(for b in ${chromeos_boards[@]}; do find arch/arm64/boot -name "*${b}*.dtb" | LC_COLLATE=C sort; done))
-
+#
 #  lz4 -20 -z -f -m ${image}
 #  echo ${chromebook_dtbs[@]} | ../generate_chromebook_its.sh ${image}.lz4 arm64 lz4 > kernel.its
 #
-  mkimage -D "-I dts -O dtb -p 2048" -f kernel.its vmlinux.uimg
-  dd if=/dev/zero of=bootloader.bin bs=512 count=1
-  echo "console=tty0 console=ttyS2,115200n8 earlyprintk=ttyS2,115200n8 console=ttyMSM0,115200n8 init=/sbin/init root=PARTUUID=%U/PARTNROFF=1 rootwait rw noinitrd" > cmdline
-  vbutil_kernel \
-    --pack vmlinux.kpart \
-    --version 1 \
-    --vmlinuz vmlinux.uimg \
-    --arch aarch64 \
-    --config cmdline \
-    --bootloader bootloader.bin
-
-  cp vmlinux.kpart "${pkgdir}/boot"
-}
-
+#  mkimage -D "-I dts -O dtb -p 2048" -f kernel.its vmlinux.uimg
+#  dd if=/dev/zero of=bootloader.bin bs=512 count=1
+#  echo "console=tty0 console=ttyS2,115200n8 earlyprintk=ttyS2,115200n8 console=ttyMSM0,115200n8 init=/sbin/init root=PARTUUID=%U/PARTNROFF=1 rootwait rw noinitrd" > cmdline
+#  vbutil_kernel \
+#    --pack vmlinux.kpart \
+#    --version 1 \
+#    --vmlinuz vmlinux.uimg \
+#    --arch aarch64 \
+#    --config cmdline \
+#    --bootloader bootloader.bin
+#
+#  cp vmlinux.kpart "${pkgdir}/boot"
+#}
+#
 pkgname=("${pkgbase}" "${pkgbase}-headers")
 for _p in ${pkgname[@]}; do
   eval "package_${_p}() {
