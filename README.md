@@ -39,5 +39,5 @@
 14. 调整下 `/boot` 目录下的内容，里面默认只有 `Image` `Image.gz` `initramfs` 等这类的文件，需要安装如下几个包：`grub` `dosfstools` `efibootmgr`，然后将 `Image` 或者 `Image.gz` 复制成 `vmlinuz-linux`，这样目录下就有 `vmlinuz` 和 `initramfs` 了，再利用 `gurb` 制作 `bootloader`，具体操作如下：
     - `grub-install --efi-directory=/boot --bootloader-id=GRUB`
     - `grub-mkconfig -o /boot/grub/grub.cfg`
-15. 最后别忘记这是 `root` 密码，配置好 `Archlinux` 是否允许远程 `ssh root` 登陆等相关细节事宜就可重启完成安装了。
+15. 最后别忘记配置 `root` 密码，是否需要 `Archlinux` 允许远程 `ssh root` 登陆等相关细节事宜就可重启完成安装了。
 16. 大家不要忘记默认 Archlinux ARM 是有默认普通用户的，叫做 `alarm` ，如果不需要就删掉。
