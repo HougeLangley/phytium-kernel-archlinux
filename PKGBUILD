@@ -48,8 +48,7 @@ build() {
 
   # build!
   unset LDFLAGS
-  #make ${MAKEFLAGS} Image Image.gz modules
-  make ${MAKEFLAGS} all
+  make ${MAKEFLAGS} Image Image.gz modules
   # Generate device tree blobs with symbols to support applying device tree overlays in U-Boot
   make ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
 }
@@ -69,8 +68,7 @@ _package() {
   local modulesdir="$pkgdir/usr/lib/modules/$kernver"
 
   echo "Installing boot image and dtbs..."
-  #install -Dm644 arch/arm64/boot/Image{,.gz} -t "${pkgdir}/boot"
-  install -Dm644 "$(make -s image_name)" "$modulesdir/vmlinuz"
+  install -Dm644 arch/arm64/boot/Image{,.gz} -t "${pkgdir}/boot"
   make INSTALL_DTBS_PATH="${pkgdir}/boot/dtbs" dtbs_install
 
   echo "Installing modules..."
