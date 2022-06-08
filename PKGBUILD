@@ -35,6 +35,9 @@ prepare() {
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
+  # add upstream patch
+  git apply --whitespace=nowarn ../patch-${pkgver}
+
   cat "${srcdir}/phytium-config" > ./.config
   make olddefconfig
   make menuconfig
