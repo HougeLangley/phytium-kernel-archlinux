@@ -14,8 +14,8 @@ url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'vboot-utils' 'dtc')
 options=('!strip')
-source=("http://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
-        "http://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
+source=("https://www.kernel.org/pub/linux/kernel/v5.x/${_srcname}.tar.xz"
+        "https://www.kernel.org/pub/linux/kernel/v5.x/patch-${pkgver}.xz"
         'phytium-config'
         'linux.preset'
         '60-linux.hook'
@@ -50,7 +50,8 @@ build() {
 
   # build!
   unset LDFLAGS
-  make ${MAKEFLAGS} Image Image.gz modules
+  #make ${MAKEFLAGS} Image Image.gz modules
+  make ${MAKEFLAGS} all
   # Generate device tree blobs with symbols to support applying device tree overlays in U-Boot
   make ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
 }
@@ -70,7 +71,8 @@ _package() {
   local modulesdir="$pkgdir/usr/lib/modules/$kernver"
 
   echo "Installing boot image and dtbs..."
-  install -Dm644 arch/arm64/boot/Image{,.gz} -t "${pkgdir}/boot"
+  #install -Dm644 arch/arm64/boot/Image{,.gz} -t "${pkgdir}/boot"
+  install -Dm644 "$(make -s image_name)" "$modulesdir/vmlinuz"
   make INSTALL_DTBS_PATH="${pkgdir}/boot/dtbs" dtbs_install
 
   echo "Installing modules..."
@@ -174,45 +176,7 @@ _package-headers() {
   mkdir -p "$pkgdir/usr/src"
   ln -sr "$builddir" "$pkgdir/usr/src/$pkgbase"
 }
-#
-#_package-chromebook() {
-#  pkgdesc="The Linux Kernel - ${_desc} - Chromebooks"
-#  depends=('linux-aarch64')
-#  conflicts=('linux-aarch64-rc-chromebook')
-#  install=${pkgname}.install
-#
-#  cd ${_srcname}
-#
-#  mkdir -p "${pkgdir}/boot"
-#
-#  image=arch/arm64/boot/Image
-#
-#  chromeos_boards=(
-#    'elm'
-#    'gru'
-#    'kukui'
-#    'trogdor'
-#    'asurada'
-#  )
-#  chromebook_dtbs=($(for b in ${chromeos_boards[@]}; do find arch/arm64/boot -name "*${b}*.dtb" | LC_COLLATE=C sort; done))
-#
-#  lz4 -20 -z -f -m ${image}
-#  echo ${chromebook_dtbs[@]} | ../generate_chromebook_its.sh ${image}.lz4 arm64 lz4 > kernel.its
-#
-#  mkimage -D "-I dts -O dtb -p 2048" -f kernel.its vmlinux.uimg
-#  dd if=/dev/zero of=bootloader.bin bs=512 count=1
-#  echo "console=tty0 console=ttyS2,115200n8 earlyprintk=ttyS2,115200n8 console=ttyMSM0,115200n8 init=/sbin/init root=PARTUUID=%U/PARTNROFF=1 rootwait rw noinitrd" > cmdline
-#  vbutil_kernel \
-#    --pack vmlinux.kpart \
-#    --version 1 \
-#    --vmlinuz vmlinux.uimg \
-#    --arch aarch64 \
-#    --config cmdline \
-#    --bootloader bootloader.bin
-#
-#  cp vmlinux.kpart "${pkgdir}/boot"
-#}
-#
+
 pkgname=("${pkgbase}" "${pkgbase}-headers")
 for _p in ${pkgname[@]}; do
   eval "package_${_p}() {
