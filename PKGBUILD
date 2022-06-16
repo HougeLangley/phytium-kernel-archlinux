@@ -4,10 +4,10 @@
 buildarch=8
 
 pkgbase=linux-phytium
-_srcname=linux-5.18.3
+_srcname=linux-5.18.4
 _kernelname=${pkgbase#linux}
 _desc="AArch64 phytium-platform"
-pkgver=5.18.3
+pkgver=5.18.4
 pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
@@ -19,7 +19,7 @@ source=("https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v5.x/${_srcname}.ta
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
-md5sums=('a8db20740f7398af70543a645a4cd7ae'
+md5sums=('ed34c493b5f15541c4e5327a59fbe485'
          '0013598c042ab8fa0f9349c60c7b6f71'
          '41cb5fef62715ead2dd109dbea8413d6'
          '0a5f16bfec6ad982a2f6782724cca8ba'
