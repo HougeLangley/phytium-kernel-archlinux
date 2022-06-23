@@ -4,22 +4,22 @@
 buildarch=8
 
 pkgbase=linux-phytium
-_srcname=linux-5.18.5
+_srcname=linux-5.18.6
 _kernelname=${pkgbase#linux}
 _desc="AArch64 phytium-platform"
-pkgver=5.18.5
+pkgver=5.18.6
 pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'vboot-utils' 'dtc')
 options=('!strip')
-source=("https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v5.x/${_srcname}.tar.xz"
+source=("https://github.com/HougeLangley/phytium-kernel-archlinux/releases/download/5.18.6-zfsbuiltin/${_srcname}.tar.xz"
         'phytium-config'
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
-md5sums=('75192af2ac7c7cad2c42d6deb5824851'
+md5sums=('ae1118ee198edac2e3d780b719d19880'
          '0013598c042ab8fa0f9349c60c7b6f71'
          '41cb5fef62715ead2dd109dbea8413d6'
          '0a5f16bfec6ad982a2f6782724cca8ba'
