@@ -4,22 +4,24 @@
 buildarch=8
 
 pkgbase=linux-phytium
-_srcname=linux-5.18.10
+_srcname=linux-5.18.12
 _kernelname=${pkgbase#linux}
 _desc="AArch64 phytium-platform"
-pkgver=5.18.10
+pkgver=5.18.12
 pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'vboot-utils' 'dtc')
 options=('!strip')
-source=("https://github.com/HougeLangley/phytium-kernel-archlinux/releases/download/${pkgver}/${_srcname}.tar.xz"
+source=("https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v5.x/${_srcname}.tar.xz"
+        'openSUSE-phytium-config'
         'phytium-config'
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
-md5sums=('27a514b27b18c8d5260a81cd7c252bb7'
+md5sums=('8582ed2b85ed20d7d3ae1e551b353385'
+         '43633148f6ad4078e5aa421181a5e209'
          '40565fbe610ba7450adb49571fe0283f'
          '41cb5fef62715ead2dd109dbea8413d6'
          '0a5f16bfec6ad982a2f6782724cca8ba'
@@ -33,7 +35,7 @@ prepare() {
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
-  cat "${srcdir}/phytium-config" > ./.config
+  cat "${srcdir}/openSUSE-phytium-config" > ./.config
   make olddefconfig
   make menuconfig
 
