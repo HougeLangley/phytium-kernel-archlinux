@@ -12,7 +12,7 @@ pkgrel=2
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'vboot-utils' 'dtc')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'vboot-utils' 'dtc' 'clang' 'llvm' 'lld' 'python' )
 options=('!strip')
 source=("https://github.com/HougeLangley/phytium-kernel-archlinux/releases/download/${pkgver}/${_srcname}.tar.xz"
         'phytium-config'
@@ -34,8 +34,8 @@ prepare() {
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
   cat "${srcdir}/phytium-config" > ./.config
-  make olddefconfig
-  make menuconfig
+  make LLVM=1 LLVM_IAS=1 olddefconfig
+  make LLVM=1 LLVM_IAS=1 menuconfig
 
 }
 
@@ -43,14 +43,14 @@ build() {
   cd ${_srcname}
 
   # get kernel version
-  make prepare
-  make -s kernelrelease > version
+  make LLVM=1 LLVM_IAS=1 prepare
+  make LLVM=1 LLVM_IAS=1 -s kernelrelease > version
 
   # build!
   unset LDFLAGS
-  make ${MAKEFLAGS} Image Image.gz modules
+  make LLVM=1 LLVM_IAS=1 ${MAKEFLAGS} Image Image.gz modules
   # Generate device tree blobs with symbols to support applying device tree overlays in U-Boot
-  make ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
+  make LLVM=1 LLVM_IAS=1 ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
 }
 
 _package() {
@@ -69,10 +69,10 @@ _package() {
 
   echo "Installing boot image and dtbs..."
   install -Dm644 arch/arm64/boot/Image{,.gz} -t "${pkgdir}/boot"
-  make INSTALL_DTBS_PATH="${pkgdir}/boot/dtbs" dtbs_install
+  make LLVM=1 LLVM_IAS=1 INSTALL_DTBS_PATH="${pkgdir}/boot/dtbs" dtbs_install
 
   echo "Installing modules..."
-  make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
+  make LLVM=1 LLVM_IAS=1 INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
 
   # remove build and source links
   rm "$modulesdir"/{source,build}
