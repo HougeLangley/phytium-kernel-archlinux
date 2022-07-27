@@ -4,22 +4,22 @@
 buildarch=8
 
 pkgbase=linux-phytium
-_srcname=linux-5.18.12
+_srcname=linux-5.18.14
 _kernelname=${pkgbase#linux}
 _desc="AArch64 phytium-platform"
-pkgver=5.18.12
-pkgrel=2
+pkgver=5.18.14
+pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
 license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'vboot-utils' 'dtc' 'clang' 'llvm' 'lld' 'python' )
 options=('!strip')
-source=("https://github.com/HougeLangley/phytium-kernel-archlinux/releases/download/${pkgver}/${_srcname}.tar.xz"
+source=("https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v5.x/${_srcname}.tar.xz"
         'phytium-config'
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
-md5sums=('8b608618b5f03067b5e5cdaeab6010b6'
+md5sums=('3191e07cbaa8cad0bcda8847af3c31fa'
          '40565fbe610ba7450adb49571fe0283f'
          '41cb5fef62715ead2dd109dbea8413d6'
          '0a5f16bfec6ad982a2f6782724cca8ba'
