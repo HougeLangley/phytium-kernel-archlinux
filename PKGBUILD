@@ -7,6 +7,7 @@ pkgbase=linux-phytium
 _srcname=linux-5.19
 _kernelname=${pkgbase#linux}
 _desc="AArch64 phytium-platform"
+kernelversion=5.19
 pkgver=5.19.10
 pkgrel=1
 arch=('aarch64')
@@ -16,12 +17,14 @@ makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' '
 options=('!strip')
 source=("https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v5.x/${_srcname}.tar.xz"
         "https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v5.x/patch-${pkgver}.xz"
+        "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v5.x/cjktty-${kernelversion}.patch"
         'phytium-config'
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
 md5sums=('f91bfe133d2cb1692f705947282e123a'
          '5cbd0c86c42318067a64ccbb626afad9'
+         'db1776ce219d87088de80390548e466f'
          '5117602ecdc0efc58d250fe217bdaeac'
          '41cb5fef62715ead2dd109dbea8413d6'
          '0a5f16bfec6ad982a2f6782724cca8ba'
