@@ -35,8 +35,8 @@ prepare() {
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
-  # add upstream patch
-  git apply --whitespace=nowarn ../patch-${pkgver}
+  # Apply patch
+  patch -Np1 -i ../patch-${pkgver}
 
   # apply Phytium UOS kernel config, you could custom
   cat "${srcdir}/phytium-config" > ./.config
