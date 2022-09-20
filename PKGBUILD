@@ -7,7 +7,7 @@ pkgbase=linux-phytium
 _srcname=linux-5.19
 _kernelname=${pkgbase#linux}
 _desc="AArch64 phytium-platform"
-pkgver=5.19
+pkgver=5.19.9
 pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
@@ -15,11 +15,13 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'vboot-utils' 'dtc' 'clang' 'llvm' 'lld' 'python' )
 options=('!strip')
 source=("https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v5.x/${_srcname}.tar.xz"
+        "https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v5.x/patch-${pkgver}.xz"
         'phytium-config'
         'linux.preset'
         '60-linux.hook'
         '90-linux.hook')
 md5sums=('f91bfe133d2cb1692f705947282e123a'
+         '111296cc47e7ac614455983bee14acb0'
          '5117602ecdc0efc58d250fe217bdaeac'
          '41cb5fef62715ead2dd109dbea8413d6'
          '0a5f16bfec6ad982a2f6782724cca8ba'
@@ -33,9 +35,13 @@ prepare() {
   echo "-$pkgrel" > localversion.10-pkgrel
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
+  # add upstream patch
+  git apply --whitespace=nowarn ../patch-${pkgver}
+
+  # apply Phytium UOS kernel config, you could custom
   cat "${srcdir}/phytium-config" > ./.config
-  make LLVM=1 LLVM_IAS=1 olddefconfig
-  make LLVM=1 LLVM_IAS=1 menuconfig
+  make olddefconfig
+  make menuconfig
 
 }
 
@@ -43,14 +49,14 @@ build() {
   cd ${_srcname}
 
   # get kernel version
-  make LLVM=1 LLVM_IAS=1 prepare
-  make LLVM=1 LLVM_IAS=1 -s kernelrelease > version
+  make prepare
+  make -s kernelrelease > version
 
   # build!
   unset LDFLAGS
-  make LLVM=1 LLVM_IAS=1 ${MAKEFLAGS} Image Image.gz modules
+  make ${MAKEFLAGS} Image Image.gz modules
   # Generate device tree blobs with symbols to support applying device tree overlays in U-Boot
-  make LLVM=1 LLVM_IAS=1 ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
+  make ${MAKEFLAGS} DTC_FLAGS="-@" dtbs
 }
 
 _package() {
@@ -69,10 +75,10 @@ _package() {
 
   echo "Installing boot image and dtbs..."
   install -Dm644 arch/arm64/boot/Image{,.gz} -t "${pkgdir}/boot"
-  make LLVM=1 LLVM_IAS=1 INSTALL_DTBS_PATH="${pkgdir}/boot/dtbs" dtbs_install
+  make INSTALL_DTBS_PATH="${pkgdir}/boot/dtbs" dtbs_install
 
   echo "Installing modules..."
-  make LLVM=1 LLVM_IAS=1 INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
+  make INSTALL_MOD_PATH="$pkgdir/usr" INSTALL_MOD_STRIP=1 modules_install
 
   # remove build and source links
   rm "$modulesdir"/{source,build}
