@@ -44,10 +44,10 @@ prepare() {
   patch -Np1 -i ../patch-${pkgver}
 
   # Apply cjktty patch
-  patch -Np1 -i ../cjktty-${kernelversion}
+  patch -Np1 -i ../cjktty-${kernelversion}.patch
 
   # Apply bbr2 patch
-  patch -Np1 -i ../0001-tcp_bbr2-introduce-BBRv2
+  patch -Np1 -i ../0001-tcp_bbr2-introduce-BBRv2.patch
 
   # apply Phytium UOS kernel config, you could custom
   cat "${srcdir}/phytium-config" > ./.config
