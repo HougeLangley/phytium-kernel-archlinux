@@ -36,7 +36,7 @@
     - `chroot /mnt/xxx /bin/bash`
     - `source /etc/profile`
 13. 完成后，将内核下载，并通过 `pacman -U` 安装；
-14. 调整下 `/boot` 目录下的内容，里面默认只有 `Image` `Image.gz` `initramfs` 等这类的文件，需要安装如下几个包：`grub` `dosfstools` `efibootmgr`，然后将 `Image` 或者 `Image.gz` 复制成 `vmlinuz-linux`，这样目录下就有 `vmlinuz` 和 `initramfs` 了，再利用 `gurb` 制作 `bootloader`，具体操作如下：
+14. 调整下 `/boot` 目录下的内容，里面默认只有 `Image` `Image.gz` `initramfs` 等这类的文件，需要安装如下几个包：`grub` `dosfstools` `efibootmgr`，然后将 `Image` 或者 `Image.gz` 复制成 `vmlinuz-linux`，随后可以重命名 `Image` 和 `Image.gz` 成其它名字，使该目录下保留 `initramfs-xxx.img` 和 `vmlinuz-xxx` 就可以了，再利用 `gurb` 制作 `bootloader`，具体操作如下：
     - `grub-install --efi-directory=/boot --bootloader-id=GRUB`
     - `grub-mkconfig -o /boot/grub/grub.cfg`
 15. 最后别忘记配置 `root` 密码，是否需要 `Archlinux` 允许远程 `ssh root` 登陆等相关细节事宜就可重启完成安装了。
