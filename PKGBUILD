@@ -41,6 +41,9 @@ prepare() {
   # Apply patch
   patch -Np1 -i ../patch-${pkgver}
 
+  # Apply cjktty patch
+  patch -Np1 -i ../cjktty-${kernelversion}
+
   # apply Phytium UOS kernel config, you could custom
   cat "${srcdir}/phytium-config" > ./.config
   make olddefconfig
