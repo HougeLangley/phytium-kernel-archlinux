@@ -18,6 +18,7 @@ options=('!strip')
 source=("https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v5.x/${_srcname}.tar.xz"
         "https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v5.x/patch-${pkgver}.xz"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v5.x/cjktty-${kernelversion}.patch"
+        "https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/${kernelversion}/bbr2-patches/0001-tcp_bbr2-introduce-BBRv2.patch"
         'phytium-config'
         'linux.preset'
         '60-linux.hook'
@@ -25,6 +26,7 @@ source=("https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v5.x/${_srcname}.ta
 md5sums=('f91bfe133d2cb1692f705947282e123a'
          '5cbd0c86c42318067a64ccbb626afad9'
          'db1776ce219d87088de80390548e466f'
+         '1c7ec5d06c4213cd2078ea2c8ac44f8e'
          '5117602ecdc0efc58d250fe217bdaeac'
          '41cb5fef62715ead2dd109dbea8413d6'
          '0a5f16bfec6ad982a2f6782724cca8ba'
@@ -43,6 +45,9 @@ prepare() {
 
   # Apply cjktty patch
   patch -Np1 -i ../cjktty-${kernelversion}
+
+  # Apply bbr2 patch
+  patch -Np1 -i ../0001-tcp_bbr2-introduce-BBRv2
 
   # apply Phytium UOS kernel config, you could custom
   cat "${srcdir}/phytium-config" > ./.config
