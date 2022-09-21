@@ -53,3 +53,10 @@
 16. （如果重启后还是不能启动）可以尝试 `grub-install --efi-directory=/boot --bootloader-id=Ubuntu` 或 `grub-install --efi-directory=/boot --bootloader-id=Deepin` 等神奇的魔法。
 17. 最后别忘记配置 `root` 密码，是否需要 `Archlinux` 允许远程 `ssh root` 登陆等相关细节事宜就可重启完成安装了。
 18. 大家不要忘记默认 Archlinux ARM 是有默认普通用户的，叫做 `alarm` （默认登陆密码是 alarm，拥有使用 sudo 的权限），如果不需要就删掉。
+
+## 显卡问题 ##
+
+1. 目前最佳实践是使用 AMD 显卡，群友大部分都使用 rx550 测试，一般情况来说，AMD 现在最有把握。
+2. 如果使用 NVIDIA 显卡，就需要分两种情况来说了。
+    - 使用开源驱动，nouveau 可以驱动开普勒架构及其以前的型号；nvidia-open 驱动目前没有打包进入 Archlinux，不清楚后续是否有计划。
+    - 也可以使用我打包好的 nvidia-aarch64 的包，同样在上面那个源可以下载使用。
