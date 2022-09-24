@@ -8,7 +8,7 @@ _srcname=linux-5.19
 _kernelname=${pkgbase#linux}
 _desc="AArch64 phytium-platform"
 kernelversion=5.19
-pkgver=5.19.10
+pkgver=5.19.11
 pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
@@ -24,10 +24,10 @@ source=("https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v5.x/${_srcname}.ta
         '60-linux.hook'
         '90-linux.hook')
 md5sums=('f91bfe133d2cb1692f705947282e123a'
-         '5cbd0c86c42318067a64ccbb626afad9'
+         'b2e6bc960af8fa09d9348e17d015c219'
          'db1776ce219d87088de80390548e466f'
          '1c7ec5d06c4213cd2078ea2c8ac44f8e'
-         '5117602ecdc0efc58d250fe217bdaeac'
+         'e52ae708f976a887e9e43472b9b5d89e'
          '41cb5fef62715ead2dd109dbea8413d6'
          '0a5f16bfec6ad982a2f6782724cca8ba'
          '3dc88030a8f2f5a5f97266d99b149f77')
