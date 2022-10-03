@@ -40,7 +40,7 @@ prepare() {
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
   # Apply patch
-  patch -Np1 -i ../patch-${pkgver}
+  #patch -Np1 -i ../patch-${pkgver}
 
   # Apply cjktty patch
   patch -Np1 -i ../cjktty-${kernelversion}.patch
