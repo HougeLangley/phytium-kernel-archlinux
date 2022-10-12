@@ -8,7 +8,7 @@ _srcname=linux-6.0
 _kernelname=${pkgbase#linux}
 _desc="AArch64 phytium-platform"
 kernelversion=6.0
-pkgver=6.0
+pkgver=6.0.1
 pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
@@ -16,7 +16,7 @@ license=('GPL2')
 makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git' 'uboot-tools' 'vboot-utils' 'dtc' 'clang' 'llvm' 'lld' 'python' )
 options=('!strip')
 source=("https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v6.x/${_srcname}.tar.xz"
-        #"https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v6.x/patch-${pkgver}.xz"
+        "https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v6.x/patch-${pkgver}.xz"
         "https://raw.githubusercontent.com/zhmars/cjktty-patches/master/v6.x/cjktty-${kernelversion}.patch"
         "https://gitlab.com/sirlucjan/kernel-patches/-/raw/master/${kernelversion}/bbr2-patches/0001-tcp_bbr2-introduce-BBRv2.patch"
         'phytium-config'
@@ -24,6 +24,7 @@ source=("https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v6.x/${_srcname}.ta
         '60-linux.hook'
         '90-linux.hook')
 md5sums=('d681bd1d62d48049a4874646f6774d92'
+         'b7df77f4588976a0bc0e8eb502538d96'
          'd61bd27f238c32bf8ed397f64fa08916'
          '74c5e6b07a7615203281f603682b703f'
          'e52ae708f976a887e9e43472b9b5d89e'
@@ -40,7 +41,7 @@ prepare() {
   echo "${pkgbase#linux}" > localversion.20-pkgname
 
   # Apply patch
-  #patch -Np1 -i ../patch-${pkgver}
+  patch -Np1 -i ../patch-${pkgver}
 
   # Apply cjktty patch
   patch -Np1 -i ../cjktty-${kernelversion}.patch
