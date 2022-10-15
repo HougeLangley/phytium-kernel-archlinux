@@ -8,7 +8,7 @@ _srcname=linux-6.0
 _kernelname=${pkgbase#linux}
 _desc="AArch64 phytium-platform"
 kernelversion=6.0
-pkgver=6.0.1
+pkgver=6.0.2
 pkgrel=1
 arch=('aarch64')
 url="http://www.kernel.org/"
@@ -24,7 +24,7 @@ source=("https://mirrors.ustc.edu.cn/kernel.org/linux/kernel/v6.x/${_srcname}.ta
         '60-linux.hook'
         '90-linux.hook')
 md5sums=('d681bd1d62d48049a4874646f6774d92'
-         'b7df77f4588976a0bc0e8eb502538d96'
+         '30c354f634839f1c94f09872f4d9b76b'
          'd61bd27f238c32bf8ed397f64fa08916'
          '74c5e6b07a7615203281f603682b703f'
          'e52ae708f976a887e9e43472b9b5d89e'
